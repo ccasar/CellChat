@@ -698,6 +698,10 @@ netClustering <- function(object, slot.name = "netP", type = c("functional","str
   comparison.name <- paste(comparison, collapse = "-")
 
   Y <- methods::slot(object, slot.name)$similarity[[type]]$dr[[comparison.name]]
+  pathways.ignore <- rownames( Y[rowSums(!is.finite(Y))>0, ] )
+  cellchat@options$pathways.ignore = pathways.ignore
+  Y <- Y[!rowSums(!is.finite(Y)),] # filter out rows with NaN, not working downstream
+  methods::slot(object, slot.name)$similarity[[type]]$dr[[comparison.name]] <- Y
   data.use <- Y
   if (methods == "kmeans") {
     if (!is.null(k)) {
