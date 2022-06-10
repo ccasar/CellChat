@@ -3245,8 +3245,10 @@ netVisual_embeddingPairwise <- function(object, slot.name = "netP", type = c("fu
   if (length(pathway.remove) > 0) {
     for (i in 1:length(prob)) {
       probi <- prob[[i]]
-      pathway.remove.idx <- which(paste0(dimnames(probi)[[3]],"--",object.names[i]) %in% pathway.remove)
-    #  pathway.remove.idx <- which(dimnames(probi)[[3]] %in% pathway.remove)
+      #pathway.remove.idx <- which(paste0(dimnames(probi)[[3]],"--",object.names[i]) %in% pathway.remove)
+      pathway.remove.idx <- which(dimnames(probi)[[3]] %in% pathway.remove)
+      Y <- Y[!rownames(Y) %in% paste0(pathway.remove, "--", object.names[i]),]
+      clusters <- clusters[!names(clusters) %in% paste0(pathway.remove, "--", object.names[i])]
       if (length(pathway.remove.idx) > 0) {
         probi <- probi[ , , -pathway.remove.idx]
       }
