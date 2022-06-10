@@ -3045,6 +3045,7 @@ netVisual_embedding <- function(object, slot.name = "netP", type = c("functional
   if (is.null(pathway.remove)) {
     similarity <- methods::slot(object, slot.name)$similarity[[type]]$matrix[[comparison.name]]
     pathway.remove <- rownames(similarity)[which(colSums(similarity) == 1)]
+    pathway.remove <- pathway.remove[pathway.remove %in% dimnames(prob)[[3]]]
   }
 
   if (length(pathway.remove) > 0) {
