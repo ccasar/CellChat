@@ -3264,6 +3264,8 @@ netVisual_embeddingPairwise <- function(object, slot.name = "netP", type = c("fu
   }
   prob_sum <- unlist(prob_sum.each)
   names(prob_sum) <- signalingAll
+  prob_sum <- prob_sum[names(prob_sum) %in% rownames(Y)]
+
 
   group <- sub(".*--", "", names(prob_sum))
   labels = sub("--.*", "", names(prob_sum))
