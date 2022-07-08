@@ -1639,19 +1639,23 @@ netVisual_heatmap <- function(object, comparison = c(1,2), measure = c("count", 
   if (sum(abs(mat) > 0) == 1) {
     color.heatmap.use = c("white", color.heatmap.use)
   } else {
-    #mat[mat == 0] <- NA
+    mat[mat == 0] <- NA
   }
-  ht1 = Heatmap(mat, col = color.heatmap.use, na_col = "white", name = legend.name,
-                bottom_annotation = col_annotation, left_annotation =row_annotation, top_annotation = ha2, right_annotation = ha1,
-                cluster_rows = cluster.rows,cluster_columns = cluster.rows,
-                row_names_side = "left",row_names_rot = 0,row_names_gp = gpar(fontsize = font.size),column_names_gp = gpar(fontsize = font.size),
-               # width = unit(width, "cm"), height = unit(height, "cm"),
-                column_title = title.name,column_title_gp = gpar(fontsize = font.size.title),column_names_rot = 90,
-                row_title = "Sources (Sender)",row_title_gp = gpar(fontsize = font.size.title),row_title_rot = 90,
-                heatmap_legend_param = list(title_gp = gpar(fontsize = 8, fontface = "plain"),title_position = "leftcenter-rot",
-                                            border = NA, #at = colorbar.break,
-                                            legend_height = unit(20, "mm"),labels_gp = gpar(fontsize = 8),grid_width = unit(2, "mm"))
-  )
+  ht1 <- NULL
+  
+  if(!all(is.na(mat))){
+    ht1 = Heatmap(mat, col = color.heatmap.use, na_col = "white", name = legend.name,
+                  bottom_annotation = col_annotation, left_annotation =row_annotation, top_annotation = ha2, right_annotation = ha1,
+                  cluster_rows = cluster.rows,cluster_columns = cluster.rows,
+                  row_names_side = "left",row_names_rot = 0,row_names_gp = gpar(fontsize = font.size),column_names_gp = gpar(fontsize = font.size),
+                 # width = unit(width, "cm"), height = unit(height, "cm"),
+                  column_title = title.name,column_title_gp = gpar(fontsize = font.size.title),column_names_rot = 90,
+                  row_title = "Sources (Sender)",row_title_gp = gpar(fontsize = font.size.title),row_title_rot = 90,
+                  heatmap_legend_param = list(title_gp = gpar(fontsize = 8, fontface = "plain"),title_position = "leftcenter-rot",
+                                              border = NA, #at = colorbar.break,
+                                              legend_height = unit(20, "mm"),labels_gp = gpar(fontsize = 8),grid_width = unit(2, "mm"))
+    )
+  }
   #  draw(ht1)
   return(ht1)
 }
