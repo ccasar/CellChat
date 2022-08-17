@@ -371,6 +371,8 @@ identifyCommunicationPatterns <- function(object, slot.name = "netP", pattern = 
 
     df<- data.frame(group = rownames(net)); rownames(df) <- rownames(net)
     cell.cols.assigned <- setNames(color.use, unique(as.character(df$group)))
+    cell.cols.assigned <- cell.cols.assigned[!is.na(names(cell.cols.assigned))]
+
     row_annotation <- HeatmapAnnotation(df = df, col = list(group = cell.cols.assigned),which = "row",
                                         show_legend = FALSE, show_annotation_name = FALSE,
                                         simple_anno_size = grid::unit(0.2, "cm"))
