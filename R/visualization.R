@@ -3371,6 +3371,8 @@ netVisual_embeddingPairwiseZoomIn <- function(object, slot.name = "netP", type =
     for (i in 1:length(prob)) {
       probi <- prob[[i]]
       pathway.remove.idx <- which(dimnames(probi)[[3]] %in% pathway.remove)
+      Y <- Y[!rownames(Y) %in% paste0(pathway.remove, "--", object.names[i]),]
+      clusters <- clusters[!names(clusters) %in% paste0(pathway.remove, "--", object.names[i])]
       if (length(pathway.remove.idx) > 0) {
         probi <- probi[ , , -pathway.remove.idx]
       }
@@ -3387,6 +3389,7 @@ netVisual_embeddingPairwiseZoomIn <- function(object, slot.name = "netP", type =
   }
   prob_sum <- unlist(prob_sum.each)
   names(prob_sum) <- signalingAll
+  prob_sum <- prob_sum[names(prob_sum) %in% rownames(Y)]
 
   group <- sub(".*--", "", names(prob_sum))
   labels = sub("--.*", "", names(prob_sum))
