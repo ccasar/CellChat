@@ -3139,14 +3139,18 @@ netVisual_embeddingZoomIn <- function(object, slot.name = "netP", type = c("func
   Y <- methods::slot(object, slot.name)$similarity[[type]]$dr[[comparison.name]]
   clusters <- methods::slot(object, slot.name)$similarity[[type]]$group[[comparison.name]]
   prob <- methods::slot(object, slot.name)$prob
+  prob <- prob[,,rownames(Y)]
+  
   if (is.null(pathway.remove)) {
     similarity <- methods::slot(object, slot.name)$similarity[[type]]$matrix[[comparison.name]]
     pathway.remove <- rownames(similarity)[which(colSums(similarity) == 1)]
+    pathway.remove <- pathway.remove[pathway.remove %in% dimnames(prob)[[3]]]
   }
 
   if (length(pathway.remove) > 0) {
     pathway.remove.idx <- which(dimnames(prob)[[3]] %in% pathway.remove)
     prob <- prob[ , , -pathway.remove.idx]
+    
   }
 
   prob_sum <- apply(prob, 3, sum)
